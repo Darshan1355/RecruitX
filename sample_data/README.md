@@ -1,13 +1,5 @@
-# Sample Data for Resume Intelligence Hub
+# TalentIQ Sample Resumes
 
-This directory contains sample candidate resume PDFs (`resume-001.pdf` through `resume-010.pdf`) for testing and demo purposes.
+This directory contains sample candidate resume PDFs (`resume-001.pdf` through `resume-010.pdf`) for demo and integration testing.
 
-## Quick Start Guide
-
-1. Launch the application:
-   ```bash
-   streamlit run main/main.py
-   ```
-2. In the Streamlit sidebar, select **Add Resume**.
-3. Upload any of the sample PDF files from this `sample_data/` folder.
-4. Confirm upload to compute vector embeddings, extract skills via the local LLM, and store the candidate record in ChromaDB.
+The current TalentIQ application processes these files through the React client, Node.js backend, and Python AI service. They are not used by a Streamlit UI.

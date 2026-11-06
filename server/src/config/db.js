@@ -3,7 +3,10 @@ const path = require('path');
 const fs = require('fs');
 const bcrypt = require('bcryptjs');
 
-const dbPath = process.env.SQLITE_DB_PATH || path.join(__dirname, '../../data/talentiq.sqlite3');
+const configuredDbPath = process.env.SQLITE_DB_PATH;
+const dbPath = configuredDbPath
+  ? (path.isAbsolute(configuredDbPath) ? configuredDbPath : path.resolve(__dirname, '../../', configuredDbPath))
+  : path.join(__dirname, '../../data/talentiq.sqlite3');
 const dbDir = path.dirname(dbPath);
 
 if (!fs.existsSync(dbDir)) {

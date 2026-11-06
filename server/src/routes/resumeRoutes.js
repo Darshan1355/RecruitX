@@ -6,7 +6,10 @@ const fs = require('fs');
 const resumeController = require('../controllers/resumeController');
 const { authenticateToken } = require('../middleware/auth');
 
-const uploadDir = path.resolve(__dirname, '../../uploads');
+const configuredUploadDir = process.env.UPLOAD_DIR;
+const uploadDir = configuredUploadDir
+  ? (path.isAbsolute(configuredUploadDir) ? configuredUploadDir : path.resolve(__dirname, '../../', configuredUploadDir))
+  : path.resolve(__dirname, '../../uploads');
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }

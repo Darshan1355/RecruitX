@@ -56,6 +56,8 @@ server/data/*.sqlite3-journal
 !server/data/.gitkeep
 ai_service/data/resume_db/*.sqlite3
 ai_service/data/resume_db/*.sqlite3-journal
+ai_service/data/resume_db/**
+!ai_service/data/resume_db/.gitkeep
 
 # Logs
 logs/

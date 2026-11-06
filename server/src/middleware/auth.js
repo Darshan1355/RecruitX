@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { get } = require('../config/db');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'talentiq_super_secret_jwt_key_2026_recruitment';
+const JWT_SECRET = process.env.JWT_SECRET;
 
 const authenticateToken = async (req, res, next) => {
   const authHeader = req.headers['authorization'];
