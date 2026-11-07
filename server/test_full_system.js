@@ -51,7 +51,7 @@ async function runTests() {
   const loginRes = await request({
     hostname: '127.0.0.1', port: 5000, path: '/api/auth/login', method: 'POST',
     headers: { 'Content-Type': 'application/json' }
-  }, { email: 'admin@talentiq.ai', password: 'Admin@1234' });
+  }, { email: 'admin@recruitx.ai', password: 'Admin@1234' });
   assert(loginRes.status === 200 && loginRes.data.token, 'Node.js JWT Authentication successful');
   const token = loginRes.data?.token;
 
@@ -102,7 +102,7 @@ async function runTests() {
 
   // 10. Frontend Client Availability on Port 3000
   const clientRes = await request({ hostname: '127.0.0.1', port: 3000, path: '/', method: 'GET' });
-  assert(clientRes.status === 200 && clientRes.raw.includes('TalentIQ'), 'Vite React Frontend online and serving TalentIQ application on http://127.0.0.1:3000');
+  assert(clientRes.status === 200 && clientRes.raw.includes('RecruitX'), 'Vite React Frontend online and serving RecruitX application on http://127.0.0.1:3000');
 
   console.log(`\n=== RESULTS: ${passed} / ${total} CHECKS PASSED ===\n`);
   if (passed === total) {

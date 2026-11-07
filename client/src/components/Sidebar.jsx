@@ -54,13 +54,13 @@ export default function Sidebar({ isOpen, onClose }) {
               <div>
                 <div className="flex items-center gap-1.5">
                   <span className="font-extrabold text-xl tracking-tight bg-gradient-to-r from-white via-slate-100 to-cyan-300 bg-clip-text text-transparent">
-                    TalentIQ
+                    RecruitX
                   </span>
                   <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
                     PRO
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-400 font-medium">Find. Understand. Hire.</p>
+                <p className="text-[11px] text-slate-400 font-medium">Recruit Smarter. Hire Better.</p>
               </div>
             </div>
 
@@ -126,7 +126,7 @@ export default function Sidebar({ isOpen, onClose }) {
           </div>
 
           <div className="px-3 py-1 flex items-center justify-between text-[11px] text-slate-500">
-            <span>TalentIQ v2.2 Enterprise</span>
+            <span>RecruitX Enterprise</span>
             <span>Node + PyRAG</span>
           </div>
         </div>

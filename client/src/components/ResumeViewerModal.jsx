@@ -31,7 +31,7 @@ export default function ResumeViewerModal({
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(null);
 
-  const token = localStorage.getItem('talentiq_token') || '';
+  const token = localStorage.getItem('recruitx_token') || localStorage.getItem('talentiq_token') || '';
   const isDocx = filename && (filename.toLowerCase().endsWith('.docx') || filename.toLowerCase().endsWith('.doc'));
 
   useEffect(() => {

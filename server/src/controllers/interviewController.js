@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const axios = require('axios');
+const axios = require('../utils/aiClient');
 const { query, get, run, addNotification } = require('../config/db');
 
 const AI_URL = process.env.AI_SERVICE_URL || 'http://127.0.0.1:5001';
@@ -185,7 +185,7 @@ exports.getInterviewPdf = async (req, res) => {
       responseType: 'arraybuffer'
     });
 
-    const filename = `TalentIQ_Interview_Guide_${session.candidate_name.replace(/\s+/g, '_')}.pdf`;
+    const filename = `RecruitX_Interview_Guide_${session.candidate_name.replace(/\s+/g, '_')}.pdf`;
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', `inline; filename="${encodeURIComponent(filename)}"`);
     res.send(Buffer.from(pdfResp.data));

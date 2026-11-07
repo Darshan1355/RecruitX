@@ -125,7 +125,7 @@ export default function ResumeUpload() {
           Resume Intelligence & Ingestion Hub
         </h1>
         <p className="text-xs sm:text-sm text-slate-400 mt-1">
-          Upload multi-page PDF or DOCX resumes. TalentIQ automatically extracts candidate DNA, builds semantic embeddings, and syncs vector databases.
+          Upload multi-page PDF or DOCX resumes. RecruitX automatically extracts candidate DNA, builds semantic embeddings, and syncs vector databases.
         </p>
       </div>
 

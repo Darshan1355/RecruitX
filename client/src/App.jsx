@@ -22,7 +22,7 @@ function ProtectedLayout() {
     return (
       <div className="min-h-screen bg-navy-950 flex items-center justify-center text-slate-400 text-sm">
         <div className="w-8 h-8 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin mr-3"></div>
-        <span>Authenticating TalentIQ Workspace...</span>
+        <span>Authenticating RecruitX Workspace...</span>
       </div>
     );
   }

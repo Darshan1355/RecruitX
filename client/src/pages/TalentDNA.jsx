@@ -144,7 +144,7 @@ export default function TalentDNA() {
   const skillsCategorized = candidate?.skills_categorized || dnaData?.skills_categorized || {};
   const allSkills = candidate?.skills || [];
 
-  const token = localStorage.getItem('talentiq_token');
+  const token = localStorage.getItem('recruitx_token') || localStorage.getItem('talentiq_token');
   const resumeId = candidate?.resume_id || candidate?.id;
   const resumeFileUrl = resumeId ? `/api/resumes/${resumeId}/file${token ? `?token=${token}` : ''}` : null;
 

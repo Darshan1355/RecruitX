@@ -1,4 +1,4 @@
-"""TalentIQ Python AI Service.
+"""RecruitX Python AI Service.
 Provides REST & SSE APIs for ChromaDB vector operations, Calibrated ATS Scoring,
 Talent DNA, Domain-Aware Interview Studio, and Streaming Copilot.
 """
@@ -45,6 +45,13 @@ except ImportError:
 app = Flask(__name__)
 CORS(app)
 
+@app.before_request
+def authenticate_service_request():
+    expected_secret = os.environ.get("SERVICE_AUTH_SECRET")
+    if expected_secret and request.path.startswith("/api/ai/"):
+        if request.headers.get("X-Service-Token") != expected_secret:
+            return jsonify({"error": "Unauthorized AI service request"}), 401
+
 # ChromaDB Persistent Storage Path
 CHROMA_PATH = os.environ.get("CHROMA_DB_PATH", str(current_dir / "data" / "resume_db"))
 print(f"[*] Initializing ChromaDB client at {CHROMA_PATH}...")
@@ -66,7 +73,7 @@ def health():
         count = resumes_collection.count()
         return jsonify({
             "status": "healthy",
-            "service": "TalentIQ AI Engine",
+            "service": "RecruitX AI Engine",
             "vector_store": "ChromaDB",
             "indexed_resumes": count,
             "embedding_model": "sentence-transformers/multi-qa-distilbert-cos-v1",
@@ -887,5 +894,5 @@ def copilot_stream():
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5001))
-    print(f"[*] Starting TalentIQ Python AI Service on http://127.0.0.1:{port}...")
+    print(f"[*] Starting RecruitX Python AI Service on http://127.0.0.1:{port}...")
     app.run(host="127.0.0.1", port=port, debug=False)

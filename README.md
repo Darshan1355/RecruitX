@@ -1,180 +1,179 @@
-# TalentIQ
+# RecruitX
 
-TalentIQ is a full-stack GenAI candidate-selection platform for recruiters. It combines a React interface, an Express API, an SQLite application database, and a Python Flask AI service backed by ChromaDB and SentenceTransformers.
+**Recruit Smarter. Hire Better.**
 
-## Features
+RecruitX is an AI recruitment SaaS platform for resume parsing, candidate intelligence, RAG search, ranking, interview generation, and recruitment workflows.
 
-- Recruiter registration, login, tenant-isolated data, and JWT authentication
-- PDF/DOCX resume upload, parsing, structured profiles, evidence citations, and preview/download
-- Technical skills, projects, education, experience, certifications, and achievements extraction
-- Embedding generation and ChromaDB vector storage
-- RAG candidate search, ATS scoring, ranking, comparison, and shortlisting
-- Candidate Talent DNA profiles
-- AI Recruitment Copilot with streaming responses and conversation history
-- Interview question generation, editing, PDF guides, saved sessions, and deletion
-- Dashboard statistics and candidate notifications
-
-## Final Structure
+## Architecture
 
 ```text
-resume_analyzer/
-├── client/                  # React + Vite frontend
-│   └── src/
-│       ├── api/
-│       ├── components/
-│       ├── context/
-│       └── pages/
-├── server/                  # Node.js + Express backend
-│   ├── src/
-│   │   ├── config/
-│   │   ├── controllers/
-│   │   ├── middleware/
-│   │   └── routes/
-│   ├── data/                # Local SQLite runtime data
-│   ├── uploads/             # Local uploaded resumes
-│   └── tests/
-├── ai_service/              # Flask AI API and ChromaDB
-├── sample_data/             # Demo resume PDFs
-├── test_core_pipeline.py    # Python parser/interview/PDF verification
-├── .env.example             # Placeholder environment configuration
-├── .gitignore
-└── README.md
+React/Vite frontend  ->  Node.js/Express API  ->  Python/Flask AI service
+                               |                         |
+                               v                         v
+                        Hosted SQL database       ChromaDB vector store
+                               |
+                               v
+                       Persistent object storage
 ```
 
-## Technology
+The current implementation uses:
 
-- Frontend: React 18, Vite, Tailwind CSS, React Router, Recharts
-- Backend: Node.js, Express, SQLite, JWT, Multer
-- AI: Python, Flask, ChromaDB, SentenceTransformers, PyPDF, python-docx, ReportLab
+- React 18, Vite, Tailwind CSS, Recharts
+- Node.js, Express, SQLite-compatible application models, JWT, Multer
+- Python, Flask, SentenceTransformers, ChromaDB, PyPDF, python-docx, ReportLab
 
-## Windows PowerShell Setup
+## Project Structure
+
+```text
+client/                 React frontend
+  src/api/              Axios API client
+  src/components/       Shared UI components
+  src/context/          Authentication and toast state
+  src/pages/            Route-level pages
+  public/favicon.svg
+server/                 Express backend
+  src/config/           Database configuration
+  src/controllers/      HTTP business logic
+  src/middleware/       JWT authentication
+  src/routes/           API routes
+  src/utils/            Service integration helpers
+ai_service/             Flask AI and vector service
+sample_data/            Demo resume PDFs
+vercel.json             Frontend Vercel configuration
+```
+
+## Local Setup on Windows
 
 ### Prerequisites
 
-- Node.js 18 or newer
-- Python 3.10 or newer
+- Node.js 18+
+- Python 3.10+
 - Windows PowerShell
 
-### 1. Configure environment variables
-
-```powershell
-Copy-Item .env.example server/.env
-Copy-Item server/.env.example server/.env
-```
-
-Set a unique random `JWT_SECRET` in `server/.env`. Example placeholder values are safe defaults only.
-
-`server/.env` is ignored by Git and must not be committed.
-
-### 2. Install frontend dependencies
-
-```powershell
-Set-Location client
-npm install
-Set-Location ..
-```
-
-### 3. Install backend dependencies
-
-```powershell
-Set-Location server
-npm install
-Set-Location ..
-```
-
-### 4. Install Python dependencies
-
-```powershell
-python -m venv .venv
-\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-python -m pip install -r ai_service/requirements.txt
-```
-
-## Run TalentIQ
-
-Open three PowerShell terminals.
-
-### Terminal 1: AI service
+### Install
 
 ```powershell
 cd G:\resume_analyzer
-\.venv\Scripts\Activate.ps1
-python ai_service/server.py
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -r ai_service\requirements.txt
+
+Copy-Item .env.example server\.env
+npm --prefix client install
+npm --prefix server install
 ```
 
-Runs at `http://127.0.0.1:5001`.
+Edit `server\.env` and set a strong `JWT_SECRET` and matching `SERVICE_AUTH_SECRET` for both Node and Python environments.
 
-### Terminal 2: Node backend
+### Start
+
+Use three PowerShell terminals:
 
 ```powershell
+# AI service
+cd G:\resume_analyzer
+.\.venv\Scripts\Activate.ps1
+$env:SERVICE_AUTH_SECRET="replace_with_a_long_random_service_secret"
+python ai_service\server.py
+```
+
+```powershell
+# Backend
 cd G:\resume_analyzer\server
 npm start
 ```
 
-Runs at `http://127.0.0.1:5000`. It initializes `server/data/talentiq.sqlite3` and requires `JWT_SECRET`.
-
-### Terminal 3: React frontend
-
 ```powershell
+# Frontend
 cd G:\resume_analyzer\client
 npm run dev
 ```
 
-Runs at `http://127.0.0.1:3000`.
+Frontend: `http://127.0.0.1:3000`
+
+Backend: `http://127.0.0.1:5000`
+
+AI service: `http://127.0.0.1:5001`
 
 ## Environment Variables
 
-| Variable | Default | Purpose |
+| Location | Variable | Default / Purpose |
 |---|---|---|
-| `PORT` | `5000` | Node backend port |
-| `JWT_SECRET` | None | Required JWT signing secret |
-| `AI_SERVICE_URL` | `http://127.0.0.1:5001` | Python service URL |
-| `SQLITE_DB_PATH` | `server/data/talentiq.sqlite3` | SQLite database location |
-| `UPLOAD_DIR` | `server/uploads` | Resume upload location |
-| `CHROMA_DB_PATH` | `ai_service/data/resume_db` | ChromaDB persistence location |
-| `PORT` (AI process) | `5001` | Flask AI service port |
+| Frontend | `VITE_API_BASE_URL` | Backend origin, for example `https://api.example.com` |
+| Backend | `PORT` | `5000` |
+| Backend | `JWT_SECRET` | Required signing secret |
+| Backend | `AI_SERVICE_URL` | `http://127.0.0.1:5001` |
+| Backend | `SERVICE_AUTH_SECRET` | Shared secret for Python service calls |
+| Backend | `SQLITE_DB_PATH` | Local SQLite path |
+| Backend | `UPLOAD_DIR` | Local resume upload path |
+| Backend | `CORS_ALLOWED_ORIGINS` | Comma-separated production origins |
+| Python | `PORT` | `5001` |
+| Python | `CHROMA_DB_PATH` | Persistent ChromaDB directory |
+| Python | `SERVICE_AUTH_SECRET` | Must match the backend secret |
 
-Do not commit `.env`, API keys, SQLite candidate data, uploaded resumes, vector database files, logs, or generated PDFs.
+Never place private secrets in frontend environment variables.
 
-## Database and Runtime Data
+## Vercel Deployment
 
-The Express backend creates and migrates the SQLite schema automatically. Runtime SQLite files and uploaded resumes are excluded from Git by `.gitignore`.
+The React frontend can be deployed directly to Vercel. The repository's `vercel.json` configures the Vite build and SPA fallback.
 
-The first backend initialization can seed the demo recruiter and sample candidate records. Existing database data is preserved on later starts.
+1. Push the repository to GitHub.
+2. Import it in Vercel.
+3. Keep the repository root as the project root, or set the root directory to `client`.
+4. If using the repository-root configuration, retain:
+   - Build command: `npm --prefix client run build`
+   - Output directory: `client/dist`
+5. Set `VITE_API_BASE_URL=https://your-backend.example.com`.
+6. Redeploy.
 
-Default demo credentials:
+The Express backend should not be deployed on Vercel as-is with the current SQLite implementation. The Flask AI service should not be deployed as-is on Vercel because it loads an embedding model and uses persistent ChromaDB storage.
 
-- Email: `admin@talentiq.ai`
-- Password: `Admin@1234`
+Recommended production architecture:
 
-Change or remove demo credentials before production use.
+- Vercel: React frontend
+- Render/Railway/Fly.io or another persistent host: Express backend and Flask AI service
+- Managed PostgreSQL (Neon, Supabase, or another provider): application SQL data
+- Hosted object storage (Supabase Storage, S3, or R2): resumes and generated PDFs
+- Persistent vector host/storage: ChromaDB-compatible managed storage or hosted vector database
 
-## API Overview
+The SQLite/ChromaDB architecture cannot safely rely on temporary serverless filesystem storage.
 
-- `POST /api/auth/register`, `POST /api/auth/login`
-- `GET /api/dashboard/*`
-- `GET|POST /api/resumes/*`
-- `GET|POST /api/candidates/*`
-- `POST /api/copilot/chat`
-- `GET|POST|PUT|DELETE /api/interviews/*`
-- `GET /api/notifications/*`
-- `GET /api/health`
-- `GET|POST /api/ai/*` on the Python service
+## Database and Migration Requirements
+
+Before production deployment:
+
+1. Back up `server/data/talentiq.sqlite3` and `server/uploads/`.
+2. Back up `ai_service/data/resume_db/`.
+3. Export candidate and resume records into managed PostgreSQL.
+4. Update SQL query adapters and connection pooling.
+5. Re-index all existing resume documents into hosted vector storage.
+6. Copy resume files into object storage while preserving database/file references.
+7. Validate user-level access for every candidate and resume.
+
+The existing SQLite database, ChromaDB collection, and uploaded files remain preserved in their current local locations until an explicit migration is performed.
+
+## Security Notes
+
+- JWT secrets must be unique in production.
+- Configure `CORS_ALLOWED_ORIGINS` to the exact frontend origin.
+- Set `SERVICE_AUTH_SECRET` to protect backend-to-AI service requests.
+- Never commit `.env` files, uploaded resumes, SQLite files, ChromaDB files, or API keys.
+- Use authenticated object-storage URLs rather than public permanent links.
 
 ## Testing
-
-Build the frontend and start all three services before integration tests.
 
 ```powershell
 cd G:\resume_analyzer\client
 npm run build
+
 cd ..\server
 npm run test:full
 npm run test:e2e
 npm run test:cascade
+
 cd ..
 python test_core_pipeline.py
 ```
 
-Integration scripts require the backend and AI service to be running.
+Integration tests require all three services to be running.

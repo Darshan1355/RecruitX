@@ -77,7 +77,7 @@ export default function Dashboard() {
       setCandidates(candRes.data.candidates || []);
     } catch (err) {
       console.error('Failed to load dashboard:', err);
-      error('Could not connect to TalentIQ services.');
+      error('Could not connect to RecruitX services.');
     } finally {
       setLoading(false);
     }
@@ -185,7 +185,7 @@ export default function Dashboard() {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Ask TalentIQ (e.g., 'Find Java developers with Spring Boot, MySQL and 2+ years...')"
+                  placeholder="Ask RecruitX (e.g., 'Find Java developers with Spring Boot, MySQL and 2+ years...')"
                   className="w-full pl-12 pr-4 py-3 sm:py-4 rounded-2xl bg-navy-950/90 border border-slate-700/80 text-white placeholder-slate-400 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/20 text-xs sm:text-sm md:text-base shadow-2xl transition-all"
                 />
               </div>

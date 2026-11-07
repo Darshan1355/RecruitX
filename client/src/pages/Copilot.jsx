@@ -67,7 +67,7 @@ export default function Copilot() {
           {
             id: 'welcome_1',
             role: 'assistant',
-            content: "Hello! I am your AI Recruitment Copilot powered by TalentIQ RAG intelligence. I can search candidates across your vector database, compare technical backgrounds, analyze skill evidence, and generate personalized interview questions. What role are you recruiting for today?",
+            content: "Hello! I am your AI Recruitment Copilot powered by RecruitX RAG intelligence. I can search candidates across your vector database, compare technical backgrounds, analyze skill evidence, and generate personalized interview questions. What role are you recruiting for today?",
             candidate_references: []
           }
         ]);
@@ -112,7 +112,7 @@ export default function Copilot() {
     setMessages(prev => [...prev, tempUserMsg, tempAssistantMsg]);
     setIsStreaming(true);
 
-    const token = localStorage.getItem('talentiq_token');
+    const token = localStorage.getItem('recruitx_token') || localStorage.getItem('talentiq_token');
     abortControllerRef.current = new AbortController();
 
     try {

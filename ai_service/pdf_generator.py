@@ -1,4 +1,4 @@
-"""Professional Interview Guide PDF Generator for TalentIQ.
+"""Professional Interview Guide PDF Generator for RecruitX.
 Generates an A4 evaluation document containing strictly:
 1. Candidate Information (Name, email, phone, role, technical skills, key projects, work experience, academic credentials)
 2. Interview Questions divided into three subsections:
@@ -58,7 +58,7 @@ class NumberedCanvas(canvas.Canvas):
         # Running footer text
         self.setFont("Helvetica", 8)
         self.setFillColor(colors.HexColor("#64748b"))
-        self.drawString(36, 20, "Technical Evaluation Rubric — TalentIQ Intelligence Platform")
+        self.drawString(36, 20, "Technical Evaluation Rubric — RecruitX Intelligence Platform")
         page_str = f"Page {self._pageNumber} of {total_pages}"
         self.drawRightString(page_w - 36, 20, page_str)
         self.restoreState()

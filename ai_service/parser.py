@@ -1,4 +1,4 @@
-"""Resume Parser, Skill Taxonomy Engine, and Evidence Citation Engine for TalentIQ.
+"""Resume Parser, Skill Taxonomy Engine, and Evidence Citation Engine for RecruitX.
 Extracts structured candidate information, projects, education, experience, certifications,
 technical artifacts, and dynamic categorized skills from PDF and DOCX files.
 """

@@ -12,7 +12,11 @@ const notificationRoutes = require('./routes/notificationRoutes');
 
 const app = express();
 
-app.use(cors());
+const corsOrigins = (process.env.CORS_ALLOWED_ORIGINS || '')
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+app.use(cors(corsOrigins.length ? { origin: corsOrigins, credentials: true } : undefined));
 app.use(express.json({ limit: '20mb' }));
 app.use(express.urlencoded({ extended: true, limit: '20mb' }));
 
@@ -23,7 +27,7 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
-    service: 'TalentIQ Node Backend',
+    service: 'RecruitX Node Backend',
     timestamp: new Date().toISOString()
   });
 });

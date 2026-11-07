@@ -7,7 +7,7 @@ async function testCascadeDelete() {
   console.log('--- Testing Cascade Deletion Workflow ---');
   // 1. Login as admin
   const loginRes = await axios.post('http://127.0.0.1:5000/api/auth/login', {
-    email: 'admin@talentiq.ai',
+    email: 'admin@recruitx.ai',
     password: 'Admin@1234'
   });
   const token = loginRes.data.token;

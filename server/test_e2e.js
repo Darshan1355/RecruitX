@@ -2,7 +2,7 @@ const axios = require('axios');
 
 async function testAll() {
   console.log('--- 1. Testing Registration ---');
-  const userAEmail = 'recruiter_' + Date.now() + '@talentiq.ai';
+  const userAEmail = 'recruiter_' + Date.now() + '@recruitx.ai';
   const regRes = await axios.post('http://127.0.0.1:5000/api/auth/register', {
     name: 'Recruiter Alpha',
     email: userAEmail,
@@ -19,7 +19,7 @@ async function testAll() {
 
   console.log('--- 3. Testing Lead Recruiter (Pre-seeded 10 Resumes) ---');
   const loginRes = await axios.post('http://127.0.0.1:5000/api/auth/login', {
-    email: 'admin@talentiq.ai',
+    email: 'admin@recruitx.ai',
     password: 'Admin@1234'
   });
   const tokenAdmin = loginRes.data.token;

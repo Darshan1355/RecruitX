@@ -209,7 +209,14 @@ const initDB = async () => {
   await safeAddColumn('interview_sessions', 'status TEXT DEFAULT "Completed"');
 
   // Seed default demo user if empty
-  const admin = await get(`SELECT * FROM users WHERE email = ?`, ['admin@talentiq.ai']);
+  let admin = await get(`SELECT * FROM users WHERE email = ?`, ['admin@recruitx.ai']);
+  if (!admin) {
+    admin = await get(`SELECT * FROM users WHERE email = ?`, ['admin@talentiq.ai']);
+    if (admin) {
+      await run(`UPDATE users SET email = ?, name = ? WHERE id = ?`, ['admin@recruitx.ai', 'RecruitX Lead Recruiter', admin.id]);
+      admin = await get(`SELECT * FROM users WHERE id = ?`, [admin.id]);
+    }
+  }
   let defaultUserId = admin ? admin.id : 'usr_admin_default';
 
   if (!admin) {
@@ -217,9 +224,9 @@ const initDB = async () => {
     const hash = await bcrypt.hash('Admin@1234', salt);
     await run(
       `INSERT INTO users (id, name, email, password_hash, role) VALUES (?, ?, ?, ?, ?)`,
-      ['usr_admin_default', 'TalentIQ Lead Recruiter', 'admin@talentiq.ai', hash, 'admin']
+      ['usr_admin_default', 'RecruitX Lead Recruiter', 'admin@recruitx.ai', hash, 'admin']
     );
-    console.log('Seeded default user: admin@talentiq.ai / Admin@1234');
+    console.log('Seeded default RecruitX user: admin@recruitx.ai');
   }
 
   // Pre-seed candidates from existing sample data if candidates table is empty
@@ -234,7 +241,7 @@ const syncInitialCandidates = async (defaultUserId) => {
   const sampleFolder = path.resolve(__dirname, '../../../sample_data');
   if (!fs.existsSync(sampleFolder)) return;
 
-  const axios = require('axios');
+  const axios = require('../utils/aiClient');
   const AI_URL = process.env.AI_SERVICE_URL || 'http://127.0.0.1:5001';
 
   const files = fs.readdirSync(sampleFolder).filter(f => f.endsWith('.pdf'));

@@ -30,7 +30,7 @@ export default function Login() {
   };
 
   const fillDemoRecruiter = () => {
-    setEmail('admin@talentiq.ai');
+    setEmail('admin@recruitx.ai');
     setPassword('Admin@1234');
   };
 
@@ -48,8 +48,8 @@ export default function Login() {
               <Sparkles className="w-6 h-6 text-cyan-400" />
             </div>
           </div>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight">TalentIQ</h1>
-          <p className="text-xs text-slate-400">Find. Understand. Hire.</p>
+          <h1 className="text-2xl font-extrabold text-white tracking-tight">RecruitX</h1>
+          <p className="text-xs text-slate-400">Recruit Smarter. Hire Better.</p>
         </div>
 
         {error && (
@@ -94,7 +94,7 @@ export default function Login() {
             disabled={loading}
             className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs shadow-glow-cyan transition-all flex items-center justify-center gap-2 disabled:opacity-60"
           >
-            {loading ? 'Authenticating...' : 'Sign In to TalentIQ'}
+            {loading ? 'Authenticating...' : 'Sign In to RecruitX'}
             <LogIn className="w-4 h-4" />
           </button>
         </form>

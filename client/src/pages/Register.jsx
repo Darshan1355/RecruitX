@@ -41,8 +41,8 @@ export default function Register() {
               <Sparkles className="w-6 h-6 text-cyan-400" />
             </div>
           </div>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight">Create TalentIQ Account</h1>
-          <p className="text-xs text-slate-400">Join the AI-powered recruitment revolution</p>
+          <h1 className="text-2xl font-extrabold text-white tracking-tight">Create RecruitX Account</h1>
+          <p className="text-xs text-slate-400">Recruit Smarter. Hire Better.</p>
         </div>
 
         {error && (

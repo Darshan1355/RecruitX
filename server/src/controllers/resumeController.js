@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
-const axios = require('axios');
+const axios = require('../utils/aiClient');
 const { query, get, run, addNotification } = require('../config/db');
 
 const AI_URL = process.env.AI_SERVICE_URL || 'http://127.0.0.1:5001';

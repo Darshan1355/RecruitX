@@ -1,7 +1,8 @@
 import axios from 'axios';
 
+const configuredBaseUrl = import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, '');
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: configuredBaseUrl ? `${configuredBaseUrl}/api` : '/api',
   headers: {
     'Content-Type': 'application/json'
   }
@@ -9,7 +10,7 @@ const api = axios.create({
 
 // Request interceptor: add JWT Bearer token
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('talentiq_token');
+  const token = localStorage.getItem('recruitx_token') || localStorage.getItem('talentiq_token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -21,6 +22,8 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
+      localStorage.removeItem('recruitx_token');
+      localStorage.removeItem('recruitx_user');
       localStorage.removeItem('talentiq_token');
       localStorage.removeItem('talentiq_user');
       if (window.location.pathname !== '/login' && window.location.pathname !== '/register') {
@@ -85,7 +88,7 @@ export const interviewApi = {
   update: (id, questions) => api.put(`/interviews/${id}`, { questions }),
   delete: (id) => api.delete(`/interviews/${id}`),
   getPdfUrl: (id) => {
-    const token = localStorage.getItem('talentiq_token');
+    const token = localStorage.getItem('recruitx_token') || localStorage.getItem('talentiq_token');
     return `/api/interviews/${id}/pdf${token ? `?token=${token}` : ''}`;
   }
 };

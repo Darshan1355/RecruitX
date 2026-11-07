@@ -1,7 +1,7 @@
 {
-  "name": "talentiq-server",
+  "name": "recruitx-server",
   "version": "1.0.0",
-  "description": "TalentIQ Node.js + Express.js Backend Service",
+  "description": "RecruitX Node.js + Express.js Backend Service",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",

@@ -5,10 +5,10 @@ const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
-    const saved = localStorage.getItem('talentiq_user');
+    const saved = localStorage.getItem('recruitx_user') || localStorage.getItem('talentiq_user');
     return saved ? JSON.parse(saved) : null;
   });
-  const [token, setToken] = useState(() => localStorage.getItem('talentiq_token'));
+  const [token, setToken] = useState(() => localStorage.getItem('recruitx_token') || localStorage.getItem('talentiq_token'));
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -18,7 +18,8 @@ export const AuthProvider = ({ children }) => {
           const resp = await authApi.getMe();
           if (resp.data && resp.data.user) {
             setUser(resp.data.user);
-            localStorage.setItem('talentiq_user', JSON.stringify(resp.data.user));
+            localStorage.setItem('recruitx_user', JSON.stringify(resp.data.user));
+            localStorage.removeItem('talentiq_user');
           }
         } catch (err) {
           console.warn('Session verification failed, clearing auth.');
@@ -32,15 +33,17 @@ export const AuthProvider = ({ children }) => {
   }, [token]);
 
   const login = (authToken, authUser) => {
-    localStorage.setItem('talentiq_token', authToken);
-    localStorage.setItem('talentiq_user', JSON.stringify(authUser));
+    localStorage.setItem('recruitx_token', authToken);
+    localStorage.setItem('recruitx_user', JSON.stringify(authUser));
+    localStorage.removeItem('talentiq_token');
+    localStorage.removeItem('talentiq_user');
     setToken(authToken);
     setUser(authUser);
   };
 
   const logout = () => {
-    localStorage.removeItem('talentiq_token');
-    localStorage.removeItem('talentiq_user');
+    localStorage.removeItem('recruitx_token');
+    localStorage.removeItem('recruitx_user');
     setToken(null);
     setUser(null);
   };
